@@ -1,0 +1,2 @@
+# installer-phpmyadmin
+phpMyAdmin Installer
