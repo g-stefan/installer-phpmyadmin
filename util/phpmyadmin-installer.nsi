@@ -137,7 +137,8 @@ Section "phpMyAdmin (required)" MainSection
 	SetOutPath $INSTDIR
 	File "release\favicon.ico"
 	File "util\phpmyadmin.database.cmd"
-	File "port\installer.config.inc.php";
+	File "util\installer.config.inc.php"
+	File "util\phpmyadmin.config.cmd"
 
 	; Computing EstimatedSize
 	Call GetInstalledSize
@@ -155,8 +156,7 @@ Section "phpMyAdmin (required)" MainSection
 
 	SetOutPath $INSTDIR
 	nsExec::Exec "cmd.exe /C $\"$INSTDIR\phpmyadmin.database.cmd$\""
-	nsExec::Exec "cmd.exe /C $\"cd $INSTDIR;php installer.config.inc.php$\""
-	Delete "installer.config.inc.php"
+	nsExec::Exec "cmd.exe /C $\"$INSTDIR\phpmyadmin.config.cmd$\""
 
 SectionEnd
 

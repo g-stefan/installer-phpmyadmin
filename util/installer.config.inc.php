@@ -24,9 +24,9 @@ $replace="\$cfg['Servers'][\$i]['host'] = '127.0.0.1';";
 $config=str_replace ($search, $replace, $config);
 
 $search="\$cfg['Servers'][\$i]['AllowNoPassword'] = false;";
-$search="\$cfg['Servers'][\$i]['AllowNoPassword'] = true;";
+$replace="\$cfg['Servers'][\$i]['AllowNoPassword'] = true;";
 $config=str_replace ($search, $replace, $config);
 
 //--
 
-file_put_contents("config..inc.php",$config);
+file_put_contents("config.inc.php",$config);
