@@ -13,7 +13,7 @@
 Name "phpMyAdmin"
 
 ; Version
-!define phpMyAdminVersion "5.0.2"
+!define phpMyAdminVersion "$%PRODUCT_VERSION%"
 
 ; The file to write
 OutFile "installer\phpmyadmin-${phpMyAdminVersion}-installer.exe"
@@ -137,6 +137,7 @@ Section "phpMyAdmin (required)" MainSection
 	SetOutPath $INSTDIR
 	File "release\favicon.ico"
 	File "util\phpmyadmin.database.cmd"
+	File "port\installer.config.inc.php";
 
 	; Computing EstimatedSize
 	Call GetInstalledSize
@@ -154,6 +155,8 @@ Section "phpMyAdmin (required)" MainSection
 
 	SetOutPath $INSTDIR
 	nsExec::Exec "cmd.exe /C $\"$INSTDIR\phpmyadmin.database.cmd$\""
+	nsExec::Exec "cmd.exe /C $\"cd $INSTDIR;php installer.config.inc.php$\""
+	Delete "installer.config.inc.php"
 
 SectionEnd
 
