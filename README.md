@@ -7,3 +7,10 @@ Require:
 * [MariaDB](https://github.com/g-stefan/installer-mariadb)
 * [PHP](https://github.com/g-stefan/installer-php)
 * [Apache HTTPD](https://github.com/g-stefan/installer-apache-httpd)
+
+## License
+
+Copyright (c) Grigore Stefan
+
+Licensed under the [MIT](LICENSE) license.
+
