@@ -33,17 +33,17 @@ InstallDirRegKey HKLM "Software\phpMyAdmin" "InstallPath"
 ;Interface Settings
 
 !define MUI_ABORTWARNING
-!define MUI_ICON "util\system-installer.ico"
-!define MUI_UNICON "util\system-installer.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "util\xyo-installer-wizard.bmp"
-!define MUI_UNWELCOMEFINISHPAGE_BITMAP "util\xyo-uninstaller-wizard.bmp"
+!define MUI_ICON "source\system-installer.ico"
+!define MUI_UNICON "source\system-installer.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "source\xyo-installer-wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "source\xyo-uninstaller-wizard.bmp"
 
 ;--------------------------------
 ;Pages
 
 !define MUI_COMPONENTSPAGE_SMALLDESC
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "release\LICENSE"
+!insertmacro MUI_PAGE_LICENSE "output\LICENSE"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -65,7 +65,7 @@ InstallDirRegKey HKLM "Software\phpMyAdmin" "InstallPath"
 ; Generate signed uninstaller
 !ifdef INNER
 	!echo "Inner invocation"                  ; just to see what's going on
-	OutFile "build\dummy-installer.exe"       ; not really important where this is
+	OutFile "temp\dummy-installer.exe"       ; not really important where this is
 	SetCompress off                           ; for speed
 !else
 	!echo "Outer invocation"
@@ -73,17 +73,17 @@ InstallDirRegKey HKLM "Software\phpMyAdmin" "InstallPath"
 	; Call makensis again against current file, defining INNER.  This writes an installer for us which, when
 	; it is invoked, will just write the uninstaller to some location, and then exit.
  
-	!makensis '/NOCD /DINNER "util\${__FILE__}"' = 0
+	!makensis '/NOCD /DINNER "source\${__FILE__}"' = 0
  
 	; So now run that installer we just created as build\temp-installer.exe.  Since it
 	; calls quit the return value isn't zero.
  
-	!system 'set __COMPAT_LAYER=RunAsInvoker&"build\dummy-installer.exe"' = 2
+	!system 'set __COMPAT_LAYER=RunAsInvoker&"temp\dummy-installer.exe"' = 2
  
 	; That will have written an uninstaller binary for us.  Now we sign it with your
 	; favorite code signing tool.
  
-	!system 'grigore-stefan.sign "phpMyAdmin" "build\Uninstall.exe"' = 0
+	!system 'grigore-stefan.sign "phpMyAdmin" "temp\Uninstall.exe"' = 0
  
 	; Good.  Now we can carry on writing the real installer. 	 
 !endif
@@ -131,14 +131,14 @@ Section "phpMyAdmin (required)" MainSection
 !ifndef INNER
 	SetOutPath $INSTDIR
 	; this packages the signed uninstaller 
-	File "build\Uninstall.exe"
+	File "temp\Uninstall.exe"
 !endif
 
 	SetOutPath $INSTDIR
-	File "release\favicon.ico"
-	File "util\phpmyadmin.database.cmd"
-	File "util\installer.config.inc.php"
-	File "util\phpmyadmin.config.cmd"
+	File "output\favicon.ico"
+	File "source\phpmyadmin.database.cmd"
+	File "source\installer.config.inc.php"
+	File "source\phpmyadmin.config.cmd"
 
 	; Computing EstimatedSize
 	Call GetInstalledSize
@@ -152,7 +152,7 @@ Section "phpMyAdmin (required)" MainSection
 	CreateDirectory "$PathProgramData\HTTPD\www\phpmyadmin"
 	
 	SetOutPath "$PathProgramData\HTTPD\www\phpmyadmin"
-	File /r "release\*"
+	File /r "output\*"
 
 	SetOutPath $INSTDIR
 	nsExec::Exec "cmd.exe /C $\"$INSTDIR\phpmyadmin.database.cmd$\""
