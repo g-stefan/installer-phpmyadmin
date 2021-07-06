@@ -1,2 +1,2 @@
-phpMyAdmin-5.1.0,https://www.phpmyadmin.net/downloads/
+phpMyAdmin-5.1.1,https://www.phpmyadmin.net/downloads/
 
