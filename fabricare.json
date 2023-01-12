@@ -1,0 +1,18 @@
+{
+	"solution": {
+		"name" : "installer-phpmyadmin",
+		"type" : "xyo-cpp",
+		"projects": [
+			{
+				"name" : "installer-phpmyadmin",
+				"SPDX-License-Identifier": "MIT",
+				"version" : "5.2.0",
+				"noVersion" : true
+			}
+		],
+		"hasGithub" : true,
+		"sourceLinks" : {
+			"phpMyAdmin-5.2.0" : "https://www.phpmyadmin.net/downloads/"
+		}
+	}
+}
