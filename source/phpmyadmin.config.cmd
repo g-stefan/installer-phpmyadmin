@@ -6,9 +6,9 @@ rem SPDX-License-Identifier: Unlicense
 
 setlocal ENABLEEXTENSIONS
 
-for /f "tokens=2*" %%a in ('reg.exe query "HKLM\Software\phpMyAdmin" /v InstallPath /reg:64 2^>^&1^|find "REG_"') do set PHPMYADMIN_INSTALL_DIR=%%b
-for /f "tokens=2*" %%a in ('reg.exe query "HKLM\Software\Hypertext-Preprocessor" /v InstallPath /reg:64 2^>^&1^|find "REG_"') do set PHP_DIR=%%b
+for /f "tokens=2*" %%a in ('reg.exe query "HKLM\Software\XYO\phpMyAdmin" /v InstallPath /reg:64 2^>^&1^|find "REG_"') do set PHPMYADMIN_INSTALL_DIR=%%b
+for /f "tokens=2*" %%a in ('reg.exe query "HKLM\Software\XYO\Hypertext-Preprocessor" /v InstallPath /reg:64 2^>^&1^|find "REG_"') do set PHP_DIR=%%b
 
-pushd "%ProgramData%\HTTPD\www\phpmyadmin"
+pushd "%ProgramData%\XYO\HTTPD\www\phpmyadmin"
 "%PHP_DIR%\php.exe" "%PHPMYADMIN_INSTALL_DIR%\installer.config.inc.php"
 popd

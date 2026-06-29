@@ -13,10 +13,10 @@ Shell.setenv("PRODUCT_VERSION", Project.version);
 Shell.setenv("PRODUCT_BASE", "phpmyadmin");
 
 exitIf(Shell.system("makensis.exe /NOCD \"source\\phpmyadmin-installer.nsi\""));
-exitIf(Shell.system("grigore-stefan.sign \"phpMyAdmin\" \"release\\phpmyadmin-" + Project.version + "-installer.exe\""));
+exitIf(Shell.system("grigore-stefan.sign \"phpMyAdmin\" \"release\\xyo-phpmyadmin-" + Project.version + "-installer.exe\""));
 
-var fileName = "phpmyadmin-" + Project.version + "-installer.exe";
-var jsonName = "phpmyadmin-" + Project.version + "-installer.json";
+var fileName = "xyo-phpmyadmin-" + Project.version + "-installer.exe";
+var jsonName = "xyo-phpmyadmin-" + Project.version + "-installer.json";
 
 var json = {};
 json[fileName] = SHA512.fileHash("release/" + fileName);

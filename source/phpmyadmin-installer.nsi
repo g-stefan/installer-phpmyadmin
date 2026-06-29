@@ -17,18 +17,18 @@ Name "phpMyAdmin"
 !define phpMyAdminVersion "$%PRODUCT_VERSION%"
 
 ; The file to write
-OutFile "release\phpmyadmin-${phpMyAdminVersion}-installer.exe"
+OutFile "release\xyo-phpmyadmin-${phpMyAdminVersion}-installer.exe"
 
 Unicode True
 RequestExecutionLevel admin
 BrandingText "Grigore Stefan [ github.com/g-stefan ]"
 
 ; The default installation directory
-InstallDir "$PROGRAMFILES64\phpMyAdmin"
+InstallDir "$PROGRAMFILES64\XYO\phpMyAdmin"
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\phpMyAdmin" "InstallPath"
+InstallDirRegKey HKLM "Software\XYO\phpMyAdmin" "InstallPath"
 
 ;--------------------------------
 ;Interface Settings
@@ -117,16 +117,16 @@ Section "phpMyAdmin (required)" MainSection
 
 	; Set output path to the installation directory.
 	SetOutPath $INSTDIR
-	WriteRegStr HKLM "Software\phpMyAdmin" "InstallPath" "$INSTDIR"
+	WriteRegStr HKLM "Software\XYO\phpMyAdmin" "InstallPath" "$INSTDIR"
 
 	; Write the uninstall keys for Windows
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "DisplayName" "phpMyAdmin"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "Publisher" "Grigore Stefan [ github.com/g-stefan ]"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "DisplayVersion" "${phpMyAdminVersion}"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "DisplayIcon" '"$INSTDIR\favicon.ico"'
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "UninstallString" '"$INSTDIR\Uninstall.exe"'
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "NoModify" 1
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "NoRepair" 1
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "DisplayName" "XYO phpMyAdmin"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "Publisher" "Grigore Stefan [ github.com/g-stefan ]"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "DisplayVersion" "${phpMyAdminVersion}"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "DisplayIcon" '"$INSTDIR\favicon.ico"'
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "UninstallString" '"$INSTDIR\Uninstall.exe"'
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "NoModify" 1
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "NoRepair" 1
 
 ; Uninstaller
 !ifndef INNER
@@ -144,15 +144,15 @@ Section "phpMyAdmin (required)" MainSection
 	; Computing EstimatedSize
 	Call GetInstalledSize
 	Pop $0
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin" "EstimatedSize" "$0"
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin" "EstimatedSize" "$0"
 
 	; Create ProgramData folder
 	ReadEnvStr $0 "ProgramData"
 	StrCpy $PathProgramData $0
 	
-	CreateDirectory "$PathProgramData\HTTPD\www\phpmyadmin"
+	CreateDirectory "$PathProgramData\XYO\HTTPD\www\phpmyadmin"
 	
-	SetOutPath "$PathProgramData\HTTPD\www\phpmyadmin"
+	SetOutPath "$PathProgramData\XYO\HTTPD\www\phpmyadmin"
 	File /r "output\*"
 
 	SetOutPath $INSTDIR
@@ -214,10 +214,10 @@ Section "Uninstall"
 	!macroend
  
 	ClearErrors
-	ReadRegStr $INSTDIR HKLM "Software\phpMyAdmin" "InstallPath"
+	ReadRegStr $INSTDIR HKLM "Software\XYO\phpMyAdmin" "InstallPath"
 	IfErrors +2
 	StrCmp $INSTDIR "" 0 +2
-		StrCpy $INSTDIR "$PROGRAMFILES64\phpMyAdmin"
+		StrCpy $INSTDIR "$PROGRAMFILES64\XYO\phpMyAdmin"
  
 	# Check that the uninstall isn't dangerous.
 	!insertmacro BadPathsCheck
@@ -241,14 +241,14 @@ Section "Uninstall"
 	SetOutPath $TEMP
 
 	; Remove registry keys
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\phpMyAdmin"
-	DeleteRegKey HKLM "Software\phpMyAdmin"
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\XYO-phpMyAdmin"
+	DeleteRegKey HKLM "Software\XYO\phpMyAdmin"
 
 	; Remove ProgramData files
 	ReadEnvStr $0 "ProgramData"
 	StrCpy $PathProgramData $0
 	
-	RMDir /r "$PathProgramData\HTTPD\www\phpmyadmin"
+	RMDir /r "$PathProgramData\XYO\HTTPD\www\phpmyadmin"
 
 	; Remove database
 	nsExec::Exec "mysql -u root -e $\"drop database phpmyadmin;$\""
